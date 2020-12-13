@@ -18,12 +18,13 @@ d3.json("samples.json").then((data)=> {
        y: otuIds,
        type: "bar",
        orientation: "h",
+       text: otuName
        
    }
    data = [trace1]
    layout = {
-       title: "attempt",
-       label: otuName
+       title: "",
+       
 
    }
    
