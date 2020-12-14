@@ -1,8 +1,11 @@
 
 d3.json("samples.json").then((data)=> {
     
-    
-   function init(){
+    for (d=0; d<data.names.length; d++){
+        d3.select("#selDataset").append("option").text(data.names[d]).attr('value', data.names[d])
+    } 
+   console.log(d)
+    function init(){
     var i = Math.floor(((Math.random() * 153) + 1));
     var samp = data.samples[i];
     
@@ -42,9 +45,7 @@ d3.json("samples.json").then((data)=> {
         var dataset = dropdownMenu.property("value");
         var x = [];
         var y = [];
-        for (d=0; d<153; d++){
-            if (data
-        }
+        
 
 
     }
