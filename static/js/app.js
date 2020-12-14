@@ -4,10 +4,10 @@ d3.json("samples.json").then((data)=> {
     for (d=0; d<data.names.length; d++){
         d3.select("#selDataset").append("option").text(data.names[d]).attr('value', data.names[d])
     } 
-   console.log(d)
+   
     function init(){
-    var i = Math.floor(((Math.random() * 153) + 1));
-    var samp = data.samples[i];
+     var i = Math.floor(((Math.random() * 153) + 1));
+    var samp = data.samples[0];
     
    //length of sample is 153
    console.log(samp);
@@ -36,8 +36,21 @@ d3.json("samples.json").then((data)=> {
    }
    
    Plotly.newPlot("bar", data, layout)
+   trace2= {
+       x: otuIds,
+       y: sampVal,
+       mode: "markers",
+       text: otuName,
+       marker: {
+           color: otuIds,
+           size: sampVal
+       }
+   }
+   data2 = [trace2]
+   Plotly.newPlot("bubble", data2)
 }
     init()
+
 
    d3.selectAll("#selDataset").on("change", updatePlotly);
     function updatePlotly(){
