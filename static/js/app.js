@@ -58,12 +58,28 @@ d3.json("samples.json").then((data)=> {
    }
    data2 = [trace2]
    Plotly.newPlot("bubble", data2)
-   data.metadata.forEach((metaSet)=> {
-       console.log(metaSet)
-       Object.entries(metaSet).forEach(([key, value])=> {
-        console.log(`Key: ${key} and Value ${value}`);
-       })
-   })
+   var meta = data.metadata
+
+
+    
+   var subj = parseInt(d3.select("#selDataset").property("value"))
+   console.log(subj)
+   var meta = data.metadata.filter(m => m.id === subj);
+   var mkey =[]
+   var mval =[]
+   meta.forEach((metaSet)=> {
+    console.log(metaSet)
+    //d3.select("#sample-metadata").text(Object.entries(metaSet))
+    Object.entries(metaSet).forEach(([key, value])=> {
+     console.log(`Key: ${key} and Value ${value}`);
+     
+     d3.select("#sample-metadata").text(Object.entries(metaSet))
+     
+    })
+})
+
+   
+   
    
    
 }
@@ -72,11 +88,23 @@ d3.json("samples.json").then((data)=> {
 
    d3.selectAll("#selDataset").on("change", updatePlotly);
     function updatePlotly(){
-        var dropdownMenu = d3.select("#selDataset").node();
+        var dropdownMenu = d3.select("#selDataset");
         var dataset = dropdownMenu.property("value");
         var x = [];
         var y = [];
-        
+        for (var p=0; p<data.samples.length; p++){
+            if(dataset===data.samples[p].id){
+                x.push(data.samples[p].sample_values.slice(0,10))
+                y.push(data.samples[p].otu_ids.slice(0,10))
+                Plotly.restyle("bar", "x", [x])
+                Plotly.restyle("bar", "y", [y])
+                Plotly.restyle("bubble", "x", [y])
+                Plotly.restyle("bubble", "y", [x])
+                break;
+            }else{
+                return null;
+            }
+        }
 
 
     }
