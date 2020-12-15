@@ -1,9 +1,19 @@
 
 d3.json("samples.json").then((data)=> {
+
     
+    function unpack(rows, index) {
+        return rows.map(function(row) {
+          return row[index];
+        });
+      }
+      
+
     for (d=0; d<data.names.length; d++){
-        d3.select("#selDataset").append("option").text(data.names[d]).attr('value', data.names[d])
+        d3.select("#selDataset").append("option").text(data.names[d]).attr('value', data.names[d])   
     } 
+    
+    
    
     function init(){
      var i = Math.floor(((Math.random() * 153) + 1));
@@ -30,12 +40,12 @@ d3.json("samples.json").then((data)=> {
        
        
    }
-   data = [trace1]
+   data1 = [trace1]
    layout = {
        title: "",
    }
    
-   Plotly.newPlot("bar", data, layout)
+   Plotly.newPlot("bar", data1, layout)
    trace2= {
        x: otuIds,
        y: sampVal,
@@ -48,6 +58,14 @@ d3.json("samples.json").then((data)=> {
    }
    data2 = [trace2]
    Plotly.newPlot("bubble", data2)
+   data.metadata.forEach((metaSet)=> {
+       console.log(metaSet)
+       Object.entries(metaSet).forEach(([key, value])=> {
+        console.log(`Key: ${key} and Value ${value}`);
+       })
+   })
+   
+   
 }
     init()
 
